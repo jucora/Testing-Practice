@@ -1,7 +1,7 @@
 const caesarCipher = () => {
-  const lowerAlphabet = [..."abcdefghijklmnopqrstuvwxyz"];
-  const upperAlphabet = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
-  let index = "";
+  const lowerAlphabet = [...'abcdefghijklmnopqrstuvwxyz'];
+  const upperAlphabet = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
+  let index = '';
 
   const setCharacter = (char, message) => {
     message.push(char);
@@ -16,26 +16,26 @@ const caesarCipher = () => {
   };
 
   const wrap = (char, key, arrayType, message, encryptPhase) => {
-    if (encryptPhase === "encrypt") {
-      if (arrayType === "lower") {
+    if (encryptPhase === 'encrypt') {
+      if (arrayType === 'lower') {
         index = lowerAlphabet.indexOf(char) + key;
-        index = index % 26;
+        index %= 26;
         message.push(lowerAlphabet[index]);
       } else {
         index = upperAlphabet.indexOf(char) + key;
-        index = index % 26;
+        index %= 26;
         message.push(upperAlphabet[index]);
       }
-    } else if (encryptPhase === "decrypt") {
-      if (arrayType === "upper") {
+    } else if (encryptPhase === 'decrypt') {
+      if (arrayType === 'upper') {
         index = upperAlphabet.indexOf(char) - key;
         index = checkNegativeIndex(index);
-        index = index % 26;
+        index %= 26;
         message.push(upperAlphabet[index]);
       } else {
         index = lowerAlphabet.indexOf(char) - key;
         index = checkNegativeIndex(index);
-        index = index % 26;
+        index %= 26;
         message.push(lowerAlphabet[index]);
       }
     }
@@ -44,33 +44,34 @@ const caesarCipher = () => {
 
   const encrypt = (string, key) => {
     let message = [];
-    string.split("").map((char) => {
+    string.split('').map((char) => {
       if (lowerAlphabet.indexOf(char) !== -1) {
-        message = wrap(char, key, "lower", message, "encrypt");
+        message = wrap(char, key, 'lower', message, 'encrypt');
       } else if (upperAlphabet.indexOf(char) !== -1) {
-        message = wrap(char, key, "upper", message, "encrypt");
+        message = wrap(char, key, 'upper', message, 'encrypt');
       } else {
         message = setCharacter(char, message);
       }
+      return true;
     });
-    return message.join("");
+    return message.join('');
   };
 
   const decrypt = (string, key) => {
-    let message = [];
-    string.split("").map((char) => {
+    const message = [];
+    string.split('').map((char) => {
       if (lowerAlphabet.indexOf(char) !== -1) {
-        wrap(char, key, "lower", message, "decrypt");
+        wrap(char, key, 'lower', message, 'decrypt');
       } else if (upperAlphabet.indexOf(char) !== -1) {
-        wrap(char, key, "upper", message, "decrypt");
+        wrap(char, key, 'upper', message, 'decrypt');
       } else {
         setCharacter(char, message);
       }
+      return true;
     });
-    return message.join("");
+    return message.join('');
   };
   return {
-    wrap,
     encrypt,
     decrypt,
   };

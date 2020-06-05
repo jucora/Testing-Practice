@@ -1,23 +1,23 @@
-import caesarCipher from "./caesarCipher";
+import caesarCipher from './caesarCipher';
 
-describe("caesarCipher", () => {
-  /*************************************************************/
+describe('caesarCipher', () => {
+  /** ********************************************************** */
   //    TESTING PUBLIC FUNCTIONS ENCRYPT AND DECRYPT
-  /*************************************************************/
+  /** ********************************************************** */
 
-  describe("encrypt", () => {
+  describe('encrypt', () => {
     const messageToEncrypt = "Hello world, I'm learning Jest";
-    it("should encrypt a message", () => {
+    it('should encrypt a message', () => {
       expect(caesarCipher().encrypt(messageToEncrypt, 5)).toEqual(
-        "Mjqqt btwqi, N'r qjfwsnsl Ojxy"
+        "Mjqqt btwqi, N'r qjfwsnsl Ojxy",
       );
     });
   });
-  describe("decrypt", () => {
+  describe('decrypt', () => {
     const messageToDecrypt = "Mjqqt btwqi, N'r qjfwsnsl Ojxy";
-    it("should decrypt a message", () => {
+    it('should decrypt a message', () => {
       expect(caesarCipher().decrypt(messageToDecrypt, 5)).toEqual(
-        "Hello world, I'm learning Jest"
+        "Hello world, I'm learning Jest",
       );
     });
   });
