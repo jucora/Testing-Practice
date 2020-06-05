@@ -1,9 +1,8 @@
-const reverseString = require("./reverseString");
+import reverseString from "./reverseString";
 
 describe("reverseString", () => {
-    it("should returns a string reversed.", () => {
-        const myString = "hello";
-        expect(reverseString(myString)).toBe("olleh");
-    });
+  it("should returns a string reversed.", () => {
+    const myString = "hello";
+    expect(reverseString(myString)).toBe("olleh");
+  });
 });
-

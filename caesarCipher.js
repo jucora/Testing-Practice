@@ -76,4 +76,4 @@ const caesarCipher = () => {
   };
 };
 
-module.exports = caesarCipher;
+export default caesarCipher;

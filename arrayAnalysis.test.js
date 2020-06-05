@@ -1,4 +1,4 @@
-const arrayAnalysis = require("./arrayAnalysis");
+import arrayAnalysis from "./arrayAnalysis";
 
 describe("arrayAnalysis", () => {
   it("should return the average of the array values", () => {

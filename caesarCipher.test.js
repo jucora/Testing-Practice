@@ -2,7 +2,7 @@
 // IMPORTANT: COMMENTED CODE IS TO TEST PRIVATE FUNCTIONS
 /*************************************************************/
 
-const caesarCipher = require("./caesarCipher");
+import caesarCipher from "./caesarCipher";
 
 describe("caesarCipher", () => {
   // let encryptedMessage = [];
