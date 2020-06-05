@@ -1,46 +1,11 @@
-/*************************************************************/
-// IMPORTANT: COMMENTED CODE IS TO TEST PRIVATE FUNCTIONS
-/*************************************************************/
-
 const caesarCipher = () => {
   const lowerAlphabet = [..."abcdefghijklmnopqrstuvwxyz"];
   const upperAlphabet = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
-  const encryptedMessage = [];
-  const decryptedMessage = [];
   let index = "";
 
-  const wrap = (char, key, arrayType) => {
-    if (arrayType === "lower") {
-      index = lowerAlphabet.indexOf(char) + key;
-      index = index % 26;
-      encryptedMessage.push(lowerAlphabet[index]);
-    } else if (arrayType === "upper") {
-      index = upperAlphabet.indexOf(char) + key;
-      index = index % 26;
-      encryptedMessage.push(upperAlphabet[index]);
-    }
-    //return encryptedMessage;
-  };
-  const setCharacter = (char, cipherStep) => {
-    if (cipherStep === "encrypt") {
-      encryptedMessage.push(char);
-    } else if (cipherStep === "decrypt") {
-      decryptedMessage.push(char);
-    }
-    //return encryptedMessage;
-    //return decryptedMessage
-  };
-  const encrypt = (string, key = 5) => {
-    string.split("").map((char) => {
-      if (lowerAlphabet.indexOf(char) !== -1) {
-        wrap(char, key, "lower");
-      } else if (upperAlphabet.indexOf(char) !== -1) {
-        wrap(char, key, "upper");
-      } else {
-        setCharacter(char, "encrypt");
-      }
-    });
-    return encryptedMessage.join("");
+  const setCharacter = (char, message) => {
+    message.push(char);
+    return message;
   };
 
   const checkNegativeIndex = (index) => {
@@ -49,28 +14,63 @@ const caesarCipher = () => {
     }
     return index;
   };
-  const decrypt = (string, key = 5) => {
-    string.split("").map((char) => {
-      if (lowerAlphabet.indexOf(char) !== -1) {
-        index = lowerAlphabet.indexOf(char) - key;
-        index = checkNegativeIndex(index);
+
+  const wrap = (char, key, arrayType, message, encryptPhase) => {
+    if (encryptPhase === "encrypt") {
+      if (arrayType === "lower") {
+        index = lowerAlphabet.indexOf(char) + key;
         index = index % 26;
-        decryptedMessage.push(lowerAlphabet[index]);
-      } else if (upperAlphabet.indexOf(char) !== -1) {
+        message.push(lowerAlphabet[index]);
+      } else {
+        index = upperAlphabet.indexOf(char) + key;
+        index = index % 26;
+        message.push(upperAlphabet[index]);
+      }
+    } else if (encryptPhase === "decrypt") {
+      if (arrayType === "upper") {
         index = upperAlphabet.indexOf(char) - key;
         index = checkNegativeIndex(index);
         index = index % 26;
-        decryptedMessage.push(upperAlphabet[index]);
+        message.push(upperAlphabet[index]);
       } else {
-        setCharacter(char, "decrypt");
+        index = lowerAlphabet.indexOf(char) - key;
+        index = checkNegativeIndex(index);
+        index = index % 26;
+        message.push(lowerAlphabet[index]);
+      }
+    }
+    return message;
+  };
+
+  const encrypt = (string, key) => {
+    let message = [];
+    string.split("").map((char) => {
+      if (lowerAlphabet.indexOf(char) !== -1) {
+        message = wrap(char, key, "lower", message, "encrypt");
+      } else if (upperAlphabet.indexOf(char) !== -1) {
+        message = wrap(char, key, "upper", message, "encrypt");
+      } else {
+        message = setCharacter(char, message);
       }
     });
-    return decryptedMessage.join("");
+    return message.join("");
+  };
+
+  const decrypt = (string, key) => {
+    let message = [];
+    string.split("").map((char) => {
+      if (lowerAlphabet.indexOf(char) !== -1) {
+        wrap(char, key, "lower", message, "decrypt");
+      } else if (upperAlphabet.indexOf(char) !== -1) {
+        wrap(char, key, "upper", message, "decrypt");
+      } else {
+        setCharacter(char, message);
+      }
+    });
+    return message.join("");
   };
   return {
-    //wrap,
-    //setCharacter,
-    //checkNegativeIndex,
+    wrap,
     encrypt,
     decrypt,
   };
